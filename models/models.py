@@ -58,3 +58,17 @@ class Model(models.Model):
 
     class Meta:
         ordering = ['last_name']
+
+class Portfolio(models.Model):
+    model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_portfolio')
+    created = models.DateTimeField(auto_now_add=True)
+
+class Photo(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='photo_portfolio')
+    image = models.ImageField(upload_to='products/%Y/%m/%d')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created']
