@@ -33,11 +33,6 @@ class ModelAgency(models.Model):
     class Meta:
         ordering = ['name']
 
-class Measurements(models.Model):
-    chest = models.SmallIntegerField()
-    waist = models.SmallIntegerField()
-    hips = models.SmallIntegerField()
-
 class Model(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=50)
@@ -50,7 +45,6 @@ class Model(models.Model):
     shoe_size = models.SmallIntegerField()
     weight = models.SmallIntegerField()
     particularities = models.TextField()
-    measurements = models.ForeignKey(Measurements, on_delete=models.DO_NOTHING, related_name='model_measurements')
     active = models.BooleanField(default=True)
     salary = models.PositiveIntegerField()
     created = models.DateTimeField(auto_now_add=True)
@@ -58,6 +52,17 @@ class Model(models.Model):
 
     class Meta:
         ordering = ['last_name']
+
+class Measurements(models.Model):
+    chest = models.SmallIntegerField()
+    waist = models.SmallIntegerField()
+    hips = models.SmallIntegerField()
+    model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_measures')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created']
 
 class Portfolio(models.Model):
     model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_portfolio')
