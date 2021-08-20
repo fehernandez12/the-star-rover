@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'employees.apps.EmployeesConfig',
     'events.apps.EventsConfig',
     'models.apps.ModelsConfig',
+    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [

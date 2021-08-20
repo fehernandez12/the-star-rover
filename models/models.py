@@ -32,6 +32,10 @@ class ModelAgency(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name_plural = 'model agencies'
+
+    def __str__(self):
+        return f'{self.name} model agency'
 
 class Model(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -53,6 +57,9 @@ class Model(models.Model):
     class Meta:
         ordering = ['last_name']
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 class Measurements(models.Model):
     chest = models.SmallIntegerField()
     waist = models.SmallIntegerField()
@@ -63,10 +70,14 @@ class Measurements(models.Model):
 
     class Meta:
         ordering = ['-created']
+        verbose_name_plural = 'model measurements'
 
 class Portfolio(models.Model):
     model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_portfolio')
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Portfolio for model {self.model}'
 
 class Photo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

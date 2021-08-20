@@ -1,1 +1,10 @@
 /venv/
+/employees/__pycache__/
+/events/__pycache__/
+/home/__pycache__/
+/models/__pycache__/
+/star_rover/__pycache__/
+/employees/migrations/__pycache__/
+/events/migrations/__pycache__/
+/home/migrations/__pycache__/
+/models/migrations/__pycache__/
