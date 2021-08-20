@@ -25,6 +25,7 @@ urlpatterns = [
     path('employees/', include('employees.urls', namespace='employees')),
     path('events/', include('events.urls', namespace='events')),
     path('models/', include('models.urls', namespace='models')),
+    path('', include('home.urls', namespace='home')),
 ]
 
 if settings.DEBUG:
