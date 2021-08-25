@@ -20,6 +20,9 @@ class Employee(models.Model):
 	class Meta:
 		ordering = ['created']
 
+	def __str__(self):
+		return f'{self.first_name} {self.last_name}'
+
 class RegularEmployee(models.Model):
 	"""
 	Regular Employee model. This kind of employee will be
@@ -34,4 +37,5 @@ class DirectiveEmployee(models.Model):
 	assigned to each event and gets paid for directing said
 	event.
 	"""
+	employee = models.OneToOneField(Employee, on_delete=models.CASCADE, null=True, blank=True)
 	graduated_from = models.CharField(max_length=256)

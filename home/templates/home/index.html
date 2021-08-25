@@ -1,0 +1,63 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title%}The Star Rover - Model Agency{% endblock%}
+{% block content %}
+<div id="carouselModels" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button type="button" data-bs-target="#carouselModels" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		<button type="button" data-bs-target="#carouselModels" data-bs-slide-to="1" aria-label="Slide 2"></button>
+	</div>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img src="{% static 'img/modelo1.jpg' %}" class="d-block w-100" alt="...">
+		</div>
+		<div class="carousel-item">
+			<img src="{% static 'img/modelo2.jpg' %}" class="d-block w-100" alt="...">
+		</div>
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#carouselModels" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carouselModels" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
+</div>
+<div class="container-fluid">
+	<div class="row m-o">
+		<div class="col-sm-12 col-lg-6 bg-red py-4">
+			<h1 class="display-4 text-center style-script text-white">Próximos eventos</h1>
+			<hr>
+			<table class="table table-borderless table-hover text-light text-center">
+				{% for event in events %}
+				<tr>
+					<td>
+						<h6 class="font-14">{{ event.name }}</h6>
+						<small class="text-muted">Nombre del evento</small>
+					</td>
+					<td>
+						<h6 class="font-14">{{ event.start_date }}</h6>
+						<small class="text-muted">Fecha de inicio</small>
+					</td>
+					<td>
+						<h6 class="font-14">{{ event.end_date }}</h6>
+						<small class="text-muted">Fecha de finalización</small>
+					</td>
+				</tr>
+				{% empty%}
+				<tr>
+					<td class="text-center">
+						<strong>No hay eventos en los próximos días.</strong>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+		<div class="col-sm-12 col-lg-6 bg-pink py-4">
+			<h1 class="display-4 text-center style-script text-white">Encuéntranos</h1>
+		</div>
+		
+	</div>
+</div>
+{% endblock %}
