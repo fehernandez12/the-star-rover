@@ -9,3 +9,10 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return f'Profile for user {self.user.username}'
+
+	@property
+	def get_photo_url(self):
+		if self.photo and hasattr(self.photo, 'url'):
+			return self.photo.url
+		else:
+			return 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'

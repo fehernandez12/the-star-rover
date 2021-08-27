@@ -135,10 +135,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # URLs de Autenticación
-LOGIN_URL = 'home:login'
-LOGIN_REDIRECT_URL = 'home:dashboard'
-LOGOUT_URL = 'home:logout'
-LOGOUT_REDIRECT_URL = 'home:login'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
