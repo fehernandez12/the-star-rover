@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 body {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Quicksand', sans-serif;
 	background-color: #F2BFDC;
 }
 .style-script {
@@ -10,14 +11,18 @@ body {
 .big-font {
 	font-size: 2em;
 }
+/*Esquema de colores*/
 .bg-hot-purple {
-	background-color: #A270E6;
+	background-color: #A270E6!important;
 }
 .bg-red {
-	background-color: #E67078;
+	background-color: #E67078!important;
 }
 .bg-pink {
-	background-color: #F075BA;
+	background-color: #F075BA!important;
+}
+.text-red {
+	color: #e67078!important;
 }
 /*Atributos unicos*/
 .carousel-item img {
