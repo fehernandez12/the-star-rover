@@ -32,6 +32,8 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#" class="dropdown-item">Registrar evento</a>
+                            </li>
+                            <li>
                                 <a href="#" class="dropdown-item">Ver todos los eventos</a>
                             </li>
                         </ul>
@@ -41,6 +43,8 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#" class="dropdown-item">Registrar artista</a>
+                            </li>
+                            <li>
                                 <a href="#" class="dropdown-item">Ver todos los artistas</a>
                             </li>
                         </ul>
@@ -50,7 +54,15 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#" class="dropdown-item">Registrar modelo</a>
+                            </li>
+                            <li>
                                 <a href="#" class="dropdown-item">Ver todas las modelos</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a href="{% url 'models:create_agency' %}" class="dropdown-item">Registrar agencia</a>
                             </li>
                         </ul>
                     </li>

@@ -5,8 +5,12 @@ from django.contrib import messages
 from events.models import Event
 from .models import Profile
 from .forms import UserEditForm, ProfileEditForm
+from django.contrib.auth.views import LoginView
 
 # Create your views here.
+class AuthenticateView(LoginView):
+	redirect_authenticated_user = True
+
 @login_required
 def dashboard(request):
 	return render(request, 'home/home.html', {'section': 'dashboard'})
