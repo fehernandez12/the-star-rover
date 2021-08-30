@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'employees.apps.EmployeesConfig',
     'events.apps.EventsConfig',
     'models.apps.ModelsConfig',

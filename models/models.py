@@ -1,29 +1,14 @@
 import uuid
 from django_countries.fields import CountryField
-
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 
-# Dependency injection
-EYE_COLORS = (
-    ('green', 'Green'),
-    ('blue', 'Blue'),
-    ('brown', 'Brown'),
-    ('hazel', 'Hazel'),
-    ('gray', 'Gray'),
-    ('dark', 'Dark'),
-    ('other', 'Other'),
-)
-SKIN_COLORS = (
-    ('black', 'Black'),
-    ('brown', 'Brown'),
-    ('olive', 'Olive'),
-    ('fair', 'Fair'),
-    ('pale', 'Pale'),
-)
 # Create your models here.
 class ModelAgency(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=256)
+    slug = models.SlugField(max_length=200, unique=True)
     country = CountryField()
     creation_year = models.DateField()
     email = models.EmailField()
@@ -35,9 +20,35 @@ class ModelAgency(models.Model):
         verbose_name_plural = 'model agencies'
 
     def __str__(self):
-        return f'{self.name} model agency'
+        return f'{self.name}'
+
+    def get_absolute_url(self):
+        return reverse('models:agency_detail', kwargs={'slug': self.slug})
+
+    def save(self):
+        self.slug = slugify(self.name)
+        super(ModelAgency, self).save()
 
 class Model(models.Model):
+    # Dependency injection
+    EYE_COLORS = (
+        (None, 'Selecciona un color...'),
+        ('green', 'Verdes'),
+        ('blue', 'Azules'),
+        ('brown', 'Cafés'),
+        ('hazel', 'Miel'),
+        ('gray', 'Grises'),
+        ('dark', 'Negros'),
+        ('other', 'Otro'),
+    )
+    SKIN_COLORS = (
+        (None, 'Selecciona un color...'),
+        ('black', 'Negra'),
+        ('brown', 'Morena'),
+        ('olive', 'Trigueña'),
+        ('fair', 'Clara'),
+        ('pale', 'Blanca'),
+    )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -48,11 +59,12 @@ class Model(models.Model):
     height = models.SmallIntegerField()
     shoe_size = models.SmallIntegerField()
     weight = models.SmallIntegerField()
-    particularities = models.TextField()
+    particularities = models.TextField(null=True, blank=True)
     active = models.BooleanField(default=True)
     salary = models.PositiveIntegerField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    agency = models.ForeignKey(ModelAgency, related_name='model_modelagency', on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['last_name']
@@ -60,10 +72,23 @@ class Model(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    def get_absolute_url(self):
+        return reverse('models:model_detail', kwargs={'id': self.id})
+
+    def save(self, *args, **kwargs):
+        obj = super(Model, self).save(*args, **kwargs)
+        Measurements.objects.create(
+            model=self
+        )
+        Portfolio.objects.create(
+            model=self
+        )
+
+
 class Measurements(models.Model):
-    chest = models.SmallIntegerField()
-    waist = models.SmallIntegerField()
-    hips = models.SmallIntegerField()
+    chest = models.SmallIntegerField(null=True)
+    waist = models.SmallIntegerField(null=True)
+    hips = models.SmallIntegerField(null=True)
     model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_measures')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

@@ -2,14 +2,21 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.urls import reverse_lazy
 from events.models import Event
 from .models import Profile
 from .forms import UserEditForm, ProfileEditForm
-from django.contrib.auth.views import LoginView
+
 
 # Create your views here.
 class AuthenticateView(LoginView):
 	redirect_authenticated_user = True
+
+class PasswordView(SuccessMessageMixin, PasswordChangeView):
+	success_message = '¡Tu password ha sido cambiado exitosamente!'
+	success_url = reverse_lazy('dashboard')
 
 @login_required
 def dashboard(request):

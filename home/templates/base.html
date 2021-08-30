@@ -8,7 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
+    {% block css %}
+    {% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -53,16 +54,21 @@
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#">Nuestras Modelos</a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#" class="dropdown-item">Registrar modelo</a>
+                                <a href="{% url 'models:create_model' %}" class="dropdown-item">Registrar modelo</a>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item">Ver todas las modelos</a>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Agencias de modelaje</a>
+                        <ul class="dropdown-menu">
                             <li>
                                 <a href="{% url 'models:create_agency' %}" class="dropdown-item">Registrar agencia</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'models:agency_list' %}" class="dropdown-item">Ver todas las agencias</a>
                             </li>
                         </ul>
                     </li>
