@@ -9,5 +9,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
 
-from .models import Event
+from .models import Event, Designer
 # Create your views here.
+class CreateDesignerView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+	model = Designer
