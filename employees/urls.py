@@ -4,12 +4,9 @@ from . import views
 app_name = 'employees'
 
 urlpatterns = [
-path('create', views.CreateRegularEmployeeView.as_view(), name='create_RegularEmployee'),
-path('create', views.CreateDirectiveEmployeeView.as_view(), name='create_DirectiveEmployee'),
-path('RegularEmployee/update', views.UpdateRegularEmployeeView.as_view(), name='RegularEmployee_update'),
-path('DirectiveEmployee/update', views.UpdateDirectiveEmployeeView.as_view(), name='DirectiveEmployee_update'),
-path('RegularEmployee/delete', views.RegularEmployeeDeleteView.as_view(), name='RegularEmployee_delete'),
-path('DirectiveEmployee/delete', views.DirectiveEmployeeDeleteView.as_view(), name='DirectiveEmployee_delete'),
-path('all', views.EmployeeListView.as_view(), name='Employee_list'),
-
+	path('<str:emp_type>/create', views.create_employee, name='employee_create'),
+	path('create/<slug:slug>', views.edit_employee, name='employee_edit'),
+	path('<slug:slug>/delete', views.EmployeeDeleteView.as_view(), name='employee_delete'),
+	path('all', views.EmployeeListView.as_view(), name='employees_list'),
+	path('<slug:slug>', views.EmployeeDetailView.as_view(), name='employee_detail'),
 ]

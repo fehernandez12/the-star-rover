@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}The Star Rover - Eliminar Empleado{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row mx-3 my-3">
+		<div class="col-lg-12 col-xl-10 offset-xl-1 text-center">
+			<h1 class="style-script display-4 text-red">Eliminar a {{ object.first_name }} {{ object.last_name }}</h1>
+			<p class="lead">Haz clic en el botón de abajo para eliminar el empleado.</p>
+			<hr>
+			<button class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Eliminar a {{ object.first_name }} {{ object.last_name }}</button>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block modal %}
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center align-items-center">
+                <h3>¡Cuidado!</h3>
+                <p>
+                	¿Realmente deseas eliminar a {{ object.first_name }} {{ object.last_name }}? Recuerda que <span class="text-danger">esta acción no puede dehacerse.</span>
+                </p>
+                <hr>
+                <form method="post">
+                	{% csrf_token %}
+	                <button type="submit" class="btn btn-primary">Sí, deseo eliminarlo.</button>
+	                <a class="btn btn-secondary" href="{% url 'employees:employee_detail' object.slug %}">No. Quiero regresar.</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

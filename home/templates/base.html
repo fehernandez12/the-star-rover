@@ -34,13 +34,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#" class="dropdown-item">Registrar empleado raso</a>
+                                <a href="{% url 'employees:employee_create' 'regular' %}" class="dropdown-item">Registrar empleado raso</a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">Registrar empleado directivo</a>
+                                <a href="{% url 'employees:employee_create' 'directive' %}" class="dropdown-item">Registrar empleado directivo</a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">Ver todos los empleados</a>
+                                <a href="{% url 'employees:employees_list' %}" class="dropdown-item">Ver todos los empleados</a>
                             </li>
                         </ul>
                     </li>

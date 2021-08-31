@@ -13,3 +13,18 @@ from .models import Event, Designer
 # Create your views here.
 class CreateDesignerView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 	model = Designer
+	form_class = DesignerForm
+	success_message = f'¡El diseñador ha sido registrado!'
+
+	def get_context_data(self):
+		context = super().get_context_data(**kwargs)
+		context['create'] = True
+		return context
+
+class UpdateDesignerView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+	model = Designer
+	form_class = DesignerForm
+	success_message = '¡El diseñador ha sido actualizado!'
+
+class DesignerListView(LoginRequiredMixin, ListView):
+	model = Designer

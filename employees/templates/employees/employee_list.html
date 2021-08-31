@@ -11,31 +11,31 @@
 <div class="container-fluid">
 	<div class="row mx-3 my-3">
 		<div class="col-lg-12 col-xl-10 offset-xl-1">
-			<h1 class="style-script display-4 text-red">Todas las agencias</h1>
+			<h1 class="style-script display-4 text-red">Todos los empleados</h1>
 			<p class="lead">Aquí encontrarás la lista de todos los empleados registrados.</p>
 			<table class="table table-striped dt-responsive nowrap w-100" id="basic-datatable">
 				<thead>
 					<tr>
 						<th>Id</th>
-						<th>Nombres</th>
-						<th>Apellidos</th>
+						<th>Nombre</th>
 						<th>Numero de telefono</th>
+						<th>Tipo de empleado</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for agency in object_list %}
+					{% for employee in object_list %}
 					<tr>
 						
-						<td>{{ Employee.id }}</td>
-						<td>{{ Employee.first_name }}</td>
-						<td>{{ Employee.las_name }}</td>
-						<td>{{ Employee.phone_number }}</td>
-						<td><a href="{% url 'models:Employee_detail' agency.slug %}" class="btn btn-outline-primary btn-sm">Detalle</a></td>
+						<td>{{ employee.id }}</td>
+						<td>{{ employee.first_name }} {{ employee.last_name }}</td>
+						<td>{{ employee.phone_number }}</td>
+						<td>{{ employee.get_type }}</td>
+						<td><a href="{% url 'employees:employee_detail' employee.slug %}" class="btn btn-outline-primary btn-sm">Detalle</a></td>
 					</tr>
 					{% empty %}
 					<tr>
-						<td colspan="4"><span class="text-red">No hay empleados registrados. Registra una <a href="{% url 'models:create_RegularEmployee' %}">aquí.</a></span></td>
+						<td colspan="4"><span class="text-red">No hay empleados registrados. Registra uno <a href="{% url 'employees:regular_create' %}">aquí.</a></span></td>
 					</tr>
 					{% endfor %}
 				</tbody>
