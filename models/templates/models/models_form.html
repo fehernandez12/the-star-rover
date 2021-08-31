@@ -144,14 +144,12 @@
 						{{ form.agency.errors }}
 					</div>
 				</div>
-				{% if not create %}
 				<div class="mb-2">
 					<div class="form-check form-switch">
 						{{ form.active }}
 						<label for="{{ form.active.id_for_label }}">{{ form.active.label }}</label>
 					</div>
 				</div>
-				{% endif %}
 				{% if create %}
 				<button type="submit" class="btn btn-primary">Registrar modelo</button>
 				{% else %}

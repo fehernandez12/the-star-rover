@@ -66,12 +66,6 @@
 					<div class="collapse" id="collapseTwo" data-bs-parent="#agenciaAccordion">
 						<div class="card-body">
 							<table class="table table-borderless table-hover table-light" id="basic-datatable">
-								<thead>
-									<tr>
-										<th></th>
-										<th>Fecha de subida</th>
-									</tr>
-								</thead>
 								<tbody>
 									{% for photo in photos %}
 									<tr>
@@ -79,12 +73,18 @@
 											<img src="{{ photo.image.url }}" alt="" class="img-thumbnail avatar-sm">
 										</td>
 										<td>
-											{{ photo.created|date:"d-m-Y" }}
+											Subida el {{ photo.created|date:"d-m-Y" }}
+										</td>
+										<td>
+											<a href="{{ photo.image.url }}" target="_blank">Link de la imagen</a>
+										</td>
+										<td>
+											<a href="{% url 'models:photo_delete' photo.id %}" class="btn btn-outline-danger">Eliminar</a>
 										</td>
 									</tr>
 									{% empty %}
 									<tr>
-										<td>
+										<td colspan="2">
 											<strong class="text-red text-center align-items-center">No hay fotos en este portafolio aún.</strong>
 										</td>
 									</tr>
@@ -97,7 +97,7 @@
 			</div>
 			<div class="row mt-3">
 				<div class="col">
-					<a href="#" class="btn btn-primary me">Agregar fotos al portafolio</a>
+					<a href="{% url 'models:create_photo' object.pk %}" class="btn btn-primary me">Agregar fotos al portafolio</a>
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .models import ModelAgency, Models, Measurements
+from .models import ModelAgency, Models, Measurements, Photo, Portfolio
 class ModelAgencyForm(forms.ModelForm):
 	use_required_attribute = False
 	name = forms.CharField(
@@ -162,10 +162,12 @@ class ModelsForm(forms.ModelForm):
 	particularities = forms.CharField(
 		widget=forms.Textarea(
 			attrs={
-				'class': 'form-control'
+				'class': 'form-control',
+				'required': 'false'
 			}
 		),
-		label='Particularidades'
+		label='Particularidades',
+		required=False
 	)
 	salary = forms.IntegerField(
 		widget=forms.TextInput(
@@ -247,3 +249,17 @@ class MeasurementsForm(forms.ModelForm):
 	class Meta:
 		model = Measurements
 		fields = ['chest', 'waist', 'hips', 'measured_model']
+
+class PhotoForm(forms.ModelForm):
+	use_required_attribute=False
+	image = forms.ImageField(
+		widget=forms.FileInput(
+			attrs={
+				'class': 'form-control'
+			}
+		),
+		label='Imagen'
+	)
+	class Meta:
+		model = Photo
+		fields = ['image']

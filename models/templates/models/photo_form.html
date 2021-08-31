@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}The Star Rover - Subir Foto{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row mx-3 my-3">
+		<div class="col-lg-12 col-xl-10 offset-xl-1">
+			<h1 class="style-script display-4 text-red">
+				Subir foto para el portafolio de {{ portfolio.model.first_name }} {{ portfolio.model.last_name }}
+			</h1>
+			<p class="lead">Usa el formulario de abajo para subir fotos de {{ portfolio.model.first_name }}.</p>
+			{% if form.non_field_errors %}
+			<div class="alert alert-danger">
+				<ul>
+					{% for error in form.non_field_errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+			<form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="mb-2">
+					<label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+					{{ form.image }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.image.errors }}
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Subir foto</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

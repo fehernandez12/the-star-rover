@@ -1,17 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
-from rest_framework.parsers import JSONParser
 
 from .models import ModelAgency, Models, Photo, Portfolio, Measurements
-from .serializers import ModelAgencySerializer
-from .forms import ModelAgencyForm, ModelsForm, MeasurementsForm
+from .forms import ModelAgencyForm, ModelsForm, MeasurementsForm, PhotoForm
 
 # Create your views here.
 class CreateAgencyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -99,3 +98,34 @@ class PortfolioDetailView(LoginRequiredMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['photos'] = Photo.objects.filter(portfolio=self.object)
 		return context
+
+class PhotoCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+	model = Photo
+	form_class = PhotoForm
+	success_message = '¡Foto subida exitosamente!'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['portfolio'] = Portfolio.objects.get(id=self.kwargs['pk'])
+		return context
+
+	def form_valid(self, form):
+		obj = form.save(commit=False)
+		obj.portfolio = Portfolio.objects.get(id=self.kwargs['pk'])
+		return super(PhotoCreateView, self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse_lazy('models:portfolio_detail', kwargs={'pk': self.kwargs['pk']})
+
+class PhotoDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+	model = Photo
+	success_message = '¡La foto fue borrada exitosamente!'
+
+	def post(self, request, *args, **kwargs):
+		self.object = self.get_object()
+		return super(PhotoDeleteView, self).post(request, *args, **kwargs)
+
+	def get_success_url(self):
+		portfolio = self.object.portfolio
+		messages.success(self.request, '¡La foto fue borrada exitosamente!')
+		return reverse_lazy('models:portfolio_detail', kwargs={'pk': portfolio.id})

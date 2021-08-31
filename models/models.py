@@ -77,18 +77,23 @@ class Models(models.Model):
         return reverse('models:model_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            name = self.first_name + ' ' + self.last_name
-            self.slug = slugify(name)
-            super(Model, self).save(*args, **kwargs)
+        name = self.first_name + ' ' + self.last_name
+        self.slug = slugify(name)
+        super(Models, self).save(*args, **kwargs)
+        measures = Measurements.objects.filter(
+            measured_model=self
+        ).first()
+        portfolio = Portfolio.objects.filter(
+            model=self
+        ).first()
+        if not measures:
             Measurements.objects.create(
-                model=self
+                measured_model=self
             )
+        if not portfolio:
             Portfolio.objects.create(
                 model=self
             )
-        else:
-            super(Model, self).save(*args, **kwargs)
 
 
 class Measurements(models.Model):
