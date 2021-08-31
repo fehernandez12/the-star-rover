@@ -18,3 +18,4 @@ urlpatterns = [
 	path('agencies/<slug:slug>/update', views.UpdateAgencyView.as_view(), name='agency_update'),
 	path('agencies/<slug:slug>/delete', views.AgencyDeleteView.as_view(), name='agency_delete'),
 ]
+
