@@ -25,11 +25,11 @@ class ModelAgency(models.Model):
     def get_absolute_url(self):
         return reverse('models:agency_detail', kwargs={'slug': self.slug})
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(ModelAgency, self).save()
+        super(ModelAgency, self).save(*args, **kwargs)
 
-class Model(models.Model):
+class Models(models.Model):
     # Dependency injection
     EYE_COLORS = (
         (None, 'Selecciona un color...'),
@@ -52,6 +52,7 @@ class Model(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
     country = CountryField()
     birthday = models.DateField()
     eye_color = models.CharField(choices=EYE_COLORS, max_length=10)
@@ -73,23 +74,28 @@ class Model(models.Model):
         return f'{self.first_name} {self.last_name}'
 
     def get_absolute_url(self):
-        return reverse('models:model_detail', kwargs={'id': self.id})
+        return reverse('models:model_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        obj = super(Model, self).save(*args, **kwargs)
-        Measurements.objects.create(
-            model=self
-        )
-        Portfolio.objects.create(
-            model=self
-        )
+        if not self.id:
+            name = self.first_name + ' ' + self.last_name
+            self.slug = slugify(name)
+            super(Model, self).save(*args, **kwargs)
+            Measurements.objects.create(
+                model=self
+            )
+            Portfolio.objects.create(
+                model=self
+            )
+        else:
+            super(Model, self).save(*args, **kwargs)
 
 
 class Measurements(models.Model):
     chest = models.SmallIntegerField(null=True)
     waist = models.SmallIntegerField(null=True)
     hips = models.SmallIntegerField(null=True)
-    model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_measures')
+    measured_model = models.ForeignKey(Models, on_delete=models.CASCADE, related_name='model_measures')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -98,7 +104,7 @@ class Measurements(models.Model):
         verbose_name_plural = 'model measurements'
 
 class Portfolio(models.Model):
-    model = models.ForeignKey(Model, on_delete=models.CASCADE, related_name='model_portfolio')
+    model = models.ForeignKey(Models, on_delete=models.CASCADE, related_name='model_portfolio')
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

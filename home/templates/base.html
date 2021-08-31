@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-hot-purple">
         <div class="container-fluid">
-            <a class="navbar-brand style-script big-font ms-4" href="{% if request.user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}">The Star Rover</a>
+            <a class="navbar-brand style-script ms-4" href="{% if request.user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}">The Star Rover</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -57,7 +57,7 @@
                                 <a href="{% url 'models:create_model' %}" class="dropdown-item">Registrar modelo</a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">Ver todas las modelos</a>
+                                <a href="{% url 'models:model_list' %}" class="dropdown-item">Ver todas las modelos</a>
                             </li>
                         </ul>
                     </li>

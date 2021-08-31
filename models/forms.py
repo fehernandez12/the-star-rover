@@ -1,7 +1,7 @@
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .models import ModelAgency, Model
+from .models import ModelAgency, Models, Measurements
 class ModelAgencyForm(forms.ModelForm):
 	use_required_attribute = False
 	name = forms.CharField(
@@ -120,7 +120,7 @@ class ModelsForm(forms.ModelForm):
 			}
 		),
 		label='Color de ojos',
-		choices=Model.EYE_COLORS
+		choices=Models.EYE_COLORS
 	)
 	skin_color = forms.ChoiceField(
 		widget=forms.Select(
@@ -130,7 +130,7 @@ class ModelsForm(forms.ModelForm):
 			}
 		),
 		label='Color de piel',
-		choices=Model.SKIN_COLORS
+		choices=Models.SKIN_COLORS
 	)
 	height = forms.IntegerField(
 		widget=forms.TextInput(
@@ -188,9 +188,62 @@ class ModelsForm(forms.ModelForm):
 		required=False,
 		empty_label='Selecciona una agencia...'
 	)
+	active = forms.BooleanField(
+		required=False,
+		widget=forms.CheckboxInput(
+			attrs={
+				'class': 'form-check-input'
+			}
+		),
+		label='Activa'
+	)
 	
 	class Meta:
-		model = Model
+		model = Models
 		fields = ['first_name', 'last_name', 'country', 'birthday',
 			'eye_color', 'skin_color', 'height', 'shoe_size', 'weight',
-			'particularities', 'salary', 'agency']
+			'particularities', 'salary', 'agency', 'active']
+
+class MeasurementsForm(forms.ModelForm):
+	chest = forms.IntegerField(
+		widget=forms.TextInput(
+			attrs={
+				'class': 'form-control',
+				'placeholder': 'Medida del busto en cm'
+			}
+		),
+		label='Medida del busto en cm'
+	)
+	waist = forms.IntegerField(
+		widget=forms.TextInput(
+			attrs={
+				'class': 'form-control',
+				'placeholder': 'Medida de la cintura en cm'
+			}
+		),
+		label='Medida de la cintura en cm'
+	)
+	hips = forms.IntegerField(
+		widget=forms.TextInput(
+			attrs={
+				'class': 'form-control',
+				'placeholder': 'Medida de la cadera en cm'
+			}
+		),
+		label='Medida de la cadera en cm'
+	)
+	measured_model = forms.ModelChoiceField(
+		queryset=Models.objects.filter(active=True),
+		widget=forms.Select(
+			attrs={
+				'class': 'form-control select2',
+				'data-toggle': 'select2',
+				'disabled': 'true'
+			}
+		),
+		label='Modelo',
+		required=False
+	)
+	class Meta:
+		model = Measurements
+		fields = ['chest', 'waist', 'hips', 'measured_model']

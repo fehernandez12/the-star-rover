@@ -6,33 +6,35 @@
 <link rel="stylesheet" href="{% static 'css/vendor/responsive.bootstrap4.css' %}">
 <link href="{% static 'css/vendor/buttons.bootstrap4.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
-{% block title %}The Star Rover - Todas las agencias{% endblock %}
+{% block title %}The Star Rover - Todas las modelos{% endblock %}
 {% block content %}
 <div class="container-fluid">
 	<div class="row mx-3 my-3">
 		<div class="col-lg-12 col-xl-10 offset-xl-1">
-			<h1 class="style-script display-4 text-red">Todas las agencias</h1>
-			<p class="lead">Aquí encontrarás la lista de todas las agencias registradas.</p>
+			<h1 class="style-script display-4 text-red">Todas las modelos</h1>
+			<p class="lead">Aquí encontrarás la lista de todas las modelos registradas.</p>
 			<table class="table table-striped dt-responsive nowrap w-100" id="basic-datatable">
 				<thead>
 					<tr>
 						<th>Nombre</th>
 						<th>País de origen</th>
-						<th>Nombre del dueño</th>
+						<th>Salario</th>
+						<th>Agencia</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for agency in object_list %}
+					{% for model in object_list %}
 					<tr>
-						<td>{{ agency.name }}</td>
-						<td>{{ agency.country.name }}</td>
-						<td>{{ agency.owner_name }}</td>
-						<td><a href="{% url 'models:agency_detail' agency.slug %}" class="btn btn-outline-primary btn-sm">Detalle</a></td>
+						<td>{{ model.first_name }} {{ model.last_name }}</td>
+						<td>{{ model.country.name }}</td>
+						<td>${{ model.salary|intcomma }}</td>
+						<td>{{ model.agency.name }}</td>
+						<td><a href="{% url 'models:model_detail' model.slug %}" class="btn btn-outline-primary btn-sm">Detalle</a></td>
 					</tr>
 					{% empty %}
 					<tr>
-						<td colspan="4"><span class="text-red">No hay agencias registradas. Registra una <a href="{% url 'models:create_agency' %}">aquí.</a></span></td>
+						<td colspan="4"><span class="text-red">No hay modelos registradas. Registra una <a href="{% url 'models:create_model' %}">aquí.</a></span></td>
 					</tr>
 					{% endfor %}
 				</tbody>
