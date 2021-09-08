@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/vendor/dataTables.bootstrap4.css' %}">
+<link rel="stylesheet" href="{% static 'css/vendor/responsive.bootstrap4.css' %}">
+{% endblock %}
+{% block title %}The Star Rover - {{ object.first_name }} {{ object.last_name }}{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row mx-3 my-3">
+		<div class="col-lg-12 col-xl-10 offset-xl-1">
+			<h1 class="style-script display-4 text-red">Información de {{ object.first_name }} {{ object.last_name }}</h1>
+			<p class="lead">Aquí podrás ver toda la información detallada de {{ object.first_name }} {{ object.last_name }}.</p>
+			<hr>
+			<div class="accordion" id="agenciaAccordion">
+				<div class="card mb-0">
+					<div class="card-header" id="headingOne">
+						<h5 class="m-0">
+							<a href="#collapseOne" class="custom-accordion-title d-block py-2"
+								data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">
+								Información de empleado
+							</a>
+						</h5>
+					</div>
+					<div class="collapse show" id="collapseOne" data-bs-parent="#agenciaAccordion">
+						<div class="card-body">
+							<table class="table table-borderless table-hover table-light">
+								<tbody>
+									<tr>
+										<td>
+											<strong>Nombre</strong>
+										</td>
+										<td>
+											{{ object.first_name }} {{ object.last_name }}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<strong>Número de teléfono</strong>
+										</td>
+										<td>
+											{{ object.phone_number }}
+										</td>
+									</tr>
+									{% if detail.salary %}
+									<tr>
+										<td>
+											<strong>Salario</strong>
+										</td>
+										<td>${{ detail.salary|intcomma }}</td>
+									</tr>
+									{% endif %}
+									{% if detail.graduated_from %}
+									<tr>
+										<td>
+											<strong>Graduado de</strong>
+										</td>
+										<td>{{ detail.graduated_from }}</td>
+									</tr>
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="card mb-0">
+					<div class="card-header" id="headingTwo">
+						<h5 class="m-0">
+							<a href="#collapseTwo" class="custom-accordion-title d-block py-2"
+								data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseTwo">
+								Eventos asignados
+							</a>
+						</h5>
+					</div>
+					<div class="collapse" id="collapseTwo" data-bs-parent="#agenciaAccordion">
+						<div class="card-body">
+							<table class="table table-borderless table-hover table-light" id="basic-datatable">
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>País de origen</th>
+										<th>Fecha de nacimiento</th>
+										<th>Salario</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for model in models %}
+									<tr>
+										<td>{{ model.first_name }} {{ model.last_name }}</td>
+										<td>{{ model.country.name }}</td>
+										<td>{{ model.birthday|date:"d-m-Y" }}</td>
+										<td>${{ model.salary|intcomma }}</td>
+										<td><a href="{% url 'models:model_detail' model.slug %}" class="btn btn-outline-primary btn-sm">Detalle</a></td>
+									</tr>
+									{% empty %}
+									<tr>
+										<td colspan="4">
+											<strong class="text-red text-center align-items-center">No hay modelos pertenecientes a esta agencia.</strong>
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-3">
+				<div class="col">
+					<a href="{% url 'employees:employee_edit' object.slug %}" class="btn btn-warning me-1">Editar datos de empleado</a>
+					<a href="{% url 'employees:employee_delete' object.slug %}" class="btn btn-danger">Eliminar empleado</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+<!-- Datatables js -->
+<script src="{% static 'js/vendor/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/vendor/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'js/vendor/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'js/vendor/responsive.bootstrap4.min.js' %}"></script>
+
+<!-- Datatable Init js -->
+<script src="{% static 'js/pages/demo.datatable-init.js' %}"></script>
+
+{% endblock %}

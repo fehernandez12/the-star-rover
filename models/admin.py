@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import ModelAgency, Model, Measurements, Portfolio, Photo
+from .models import ModelAgency, Models, Measurements, Portfolio, Photo
 
 # Register your models here.
-@admin.register(Model)
+@admin.register(Models)
 class ModelsAdmin(admin.ModelAdmin):
 	list_display = ['id', 'last_name', 'first_name',
 		'country', 'active', 'salary']
@@ -18,9 +18,9 @@ class AgencyAdmin(admin.ModelAdmin):
 
 @admin.register(Measurements)
 class MeasuresAdmin(admin.ModelAdmin):
-	list_display = ['model', 'chest', 'waist', 'hips']
-	list_display_links = ['model']
-	list_filter = ['model', 'chest', 'waist', 'hips']
+	list_display = ['measured_model', 'chest', 'waist', 'hips']
+	list_display_links = ['measured_model']
+	list_filter = ['measured_model', 'chest', 'waist', 'hips']
 
 @admin.register(Portfolio)
 class PortfolioAdmin(admin.ModelAdmin):

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+body {
+	font-family: 'Montserrat', sans-serif;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+.style-script {
+    font-family: 'Quicksand', sans-serif;
+}
+.big-font {
+	font-size: 2em;
+}
+/*Esquema de colores*/
+.bg-hot-purple {
+	background-color: #A270E6!important;
+}
+.bg-red {
+	background-color: #E67078!important;
+}
+.bg-pink {
+	background-color: #F075BA!important;
+}
+.text-red {
+	color: #e67078!important;
+}
+/*Atributos unicos*/
+.carousel-item {
+	object-fit: cover;
+}
+#carouselModels.carousel-item img {
+	height: 600px;
+}
+.btn-outline-fuchsia {
+	color: #fff;
+	border-color: #F075BA; 
+}
+.btn-outline-fuchsia:hover {
+	color: #fff;
+	background-color: #F075BA;
+	border-color: #F075BA; 
+}
+.btn-check:focus + .btn-outline-fuchsia, .btn-outline-fuchsia:focus {
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(114, 124, 245, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(114, 124, 245, 0.5); 
+}
+.btn-check:checked + .btn-outline-fuchsia,
+.btn-check:active + .btn-outline-fuchsia, .btn-outline-fuchsia:active, 
+.btn-outline-fuchsia.active, .btn-outline-fuchsia.dropdown-toggle.show {
+	color: #fff;
+	background-color: #F075BA;
+	border-color: #F075BA; 
+}
+.btn-check:checked + .btn-outline-fuchsia:focus,
+.btn-check:active + .btn-outline-fuchsia:focus, 
+.btn-outline-fuchsia:active:focus, .btn-outline-fuchsia.active:focus, 
+.btn-outline-fuchsia.dropdown-toggle.show:focus {
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(114, 124, 245, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(114, 124, 245, 0.5); 
+}
+.btn-outline-fuchsia:disabled, .btn-outline-fuchsia.disabled {
+	color: #F075BA;
+	background-color: transparent; 
+}

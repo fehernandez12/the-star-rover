@@ -32,16 +32,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'employees.apps.EmployeesConfig',
     'events.apps.EventsConfig',
     'models.apps.ModelsConfig',
-    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'events.context_processors.next_events',
             ],
         },
     },
@@ -135,7 +138,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # URLs de Autenticación
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

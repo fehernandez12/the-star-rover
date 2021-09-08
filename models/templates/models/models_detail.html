@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}The Star Rover - {{ object.first_name }} {{ object.last_name}}{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row mx-3 my-3">
+		<div class="col-lg-12 col-xl-10 offset-xl-1">
+			<h1 class="style-script display-4 text-red">Detalles de {{ object.first_name }} {{ object.last_name }}</h1>
+			<p class="lead">Aquí podrás ver toda la información detallada de {{ object.first_name }}.</p>
+			<hr>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-12 col-lg-7 col-xl-8">
+			<table class="table table-hover table-borderless">
+				<tr>
+					<th>Nombre completo</th>
+					<td>{{ object.first_name }} {{ object.last_name }}</td>
+				</tr>
+				<tr>
+					<th>País de origen</th>
+					<td>{{ object.country.name }}</td>
+				</tr>
+				<tr>
+					<th>Fecha de nacimiento</th>
+					<td>{{ object.birthday|date:"d-m-Y" }}</td>
+				</tr>
+				<tr>
+					<th>Color de ojos</th>
+					<td>{{ object.get_eye_color_display }}</td>
+				</tr>
+				<tr>
+					<th>Color de piel</th>
+					<td>{{ object.get_skin_color_display }}</td>
+				</tr>
+				<tr>
+					<th>Estatura</th>
+					<td>{{ object.height }} cm</td>
+				</tr>
+				<tr>
+					<th>Talla de zapatos</th>
+					<td>{{ object.shoe_size }}</td>
+				</tr>
+				<tr>
+					<th>Peso</th>
+					<td>{{ object.weight }} kg</td>
+				</tr>
+				{% if object.particularities %}
+				<tr>
+					<th>Particularidades</th>
+					<td>{{ object.particularities }}</td>
+				</tr>
+				{% endif %}
+				<tr>
+					<th>Salario</th>
+					<td>${{ object.salary|intcomma }}</td>
+				</tr>
+				<tr>
+					<th>Agencia a la que pertenece</th>
+					<td>
+						<a href="{% url 'models:agency_detail' object.agency.slug %}">{{ object.agency.name }}</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-12 col-lg-5 col-xl-4">
+			<table class="table table-hover table-borderless">
+				<thead>
+					<tr>
+						<th colspan="2">Medidas</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Busto</th>
+						<td>{{ measures.chest }}</td>
+					</tr>
+					<tr>
+						<th>Cintura</th>
+						<td>{{ measures.waist }}</td>
+					</tr>
+					<tr>
+						<th>Caderas</th>
+						<td>{{ measures.hips }}</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<a href="{% url 'models:update_measures' measures.pk %}">Editar medidas de {{ object.first_name }}</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			<table class="table table-hover table-borderless">
+				<thead>
+					<tr>
+						<th>Portafolio</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ photos.count }} fotos en el portafolio.</td>
+					</tr>
+					<tr>
+						<td>Última foto agregada el {{ photos.first.created|date:"d-m-Y" }}</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="{% url 'models:portfolio_detail' portfolio.pk %}">Ver detalle del portafolio</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="d-grid gap-2">
+				<a class="btn btn-warning" href="{% url 'models:update_model' object.slug %}">Editar detalles de {{ object.first_name }}</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

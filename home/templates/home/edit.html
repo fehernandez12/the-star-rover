@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}The Star Rover - Cambiar Password{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row mx-3 my-3">
+		<div class="col-lg-12 col-xl-10 offset-xl-1">
+			<h1 class="style-script display-4 text-red">Editar perfil</h1>
+			<hr>
+			<p class="lead">Usa el formulario de abajo para editar tu perfil.</p>
+			{% if user_form.non_field_errors %}
+			{% for error in user_form.non_field_errors %}
+			<div class="alert alert-danger">{{ error }}</div>
+			{% endfor %}
+			{% endif %}
+			{% if profile_form.non_field_errors %}
+			{% for error in profile_form.non_field_errors %}
+			<div class="alert alert-danger">{{ error }}</div>
+			{% endfor %}
+			{% endif %}
+			<form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="mb-2">
+					<label for="{{ user_form.first_name.id_for_label }}">Nombres</label>
+					{{ user_form.first_name }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ user_form.first_name.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ user_form.last_name.id_for_label }}">Apellidos</label>
+					{{ user_form.last_name }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ user_form.last_name.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ user_form.email.id_for_label }}">Correo electrónico</label>
+					{{ user_form.email }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ user_form.email.errors }}
+					</div>
+				</div>
+				<div class="mb-2 position-relative" id="birthday">
+					<label for="{{ profile_form.birthday.id_for_label }}">Fecha de nacimiento</label>
+					{{ profile_form.birthday }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ profile_form.birthday.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ profile_form.photo.id_for_label }}">Foto</label>
+					{{ profile_form.photo }}
+                    <small>Foto actual: <a href="{{ request.user.profile.get_photo_url }}">{{ request.user.profile.get_photo_url }}</a></small>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="photo-clear_id" name="photo-clear">
+                        <label class="custom-control-label" for="photo-clear_id">Eliminar mi foto actual</label>
+                    </div>
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ profile_form.photo.errors }}
+					</div>
+				</div>
+				<hr>
+				<button type="submit" class="btn btn-primary">Guardar cambios</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

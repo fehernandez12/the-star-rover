@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}The Star Rover - Agencias{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row mx-3 my-3">
+		<div class="col-lg-12 col-xl-10 offset-xl-1">
+			<h1 class="style-script display-4 text-red">
+				{% if create %}Registrar{% else%}Editar{% endif %} agencia {% if not create %}{{ object.name }}{% endif %}
+			</h1>
+			{% if create %}
+			<p class="lead">Usa el formulario de abajo para registrar una nueva agencia.</p>
+			{% else %}
+			<p class="lead">Usa el formulario de abajo para editar la agencia {{ object.name }}.</p>
+			{% endif %}
+			{% if form.non_field_errors %}
+			<div class="alert alert-danger">
+				<ul>
+					{% for error in form.non_field_errors %}
+					<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+			<form method="post">
+				{% csrf_token %}
+				<div class="mb-2">
+					<label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+					{{ form.name }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.name.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ form.country.id_for_label }}">{{ form.country.label }}</label>
+					{{ form.country }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.country.errors }}
+					</div>
+				</div>
+				<div class="mb-2 position-relative" id="creation_date">
+					<label for="{{ form.creation_year.id_for_label }}">{{ form.creation_year.label }}</label>
+					{{ form.creation_year }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.creation_year.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+					{{ form.email }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.email.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ form.owner_name.id_for_label }}">{{ form.owner_name.label }}</label>
+					{{ form.owner_name }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.owner_name.errors }}
+					</div>
+				</div>
+				<div class="mb-2">
+					<label for="{{ form.parent_agency.id_for_label }}">{{ form.parent_agency.label }}</label>
+					{{ form.parent_agency }}
+					<div class="valid-feedback">
+						¡Se ve bien!
+					</div>
+					<div class="invalid-feedback">
+						{{ form.parent_agency.errors }}
+					</div>
+				</div>
+				{% if create %}
+				<button type="submit" class="btn btn-primary">Registrar agencia</button>
+				{% else %}
+				<button type="submit" class="btn btn-primary">Actualizar agencia</button>
+				{% endif %}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
